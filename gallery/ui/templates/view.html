@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Image Page</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+<a href="/">Go back to Main Menu</a>
+<br/>
+
+<h1>{{ username }}'s Images</h1>
+<ul>
+    {% for item in images %}
+    <li>
+        <a href="/delete-image/{{item.imagekey}}">Delete {{item.imagekey}}</a>
+        <a href="{{ item.filepath }}">
+            <img src="{{ item.filepath}}" width="500" height="500"/>
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+</body>
+</html>
