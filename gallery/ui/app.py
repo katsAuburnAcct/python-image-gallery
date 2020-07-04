@@ -2,9 +2,9 @@ import sys
 sys.path.append('/home/ec2-user/python-image-gallery/gallery/ui')
 
 from flask import Flask, request, render_template, session, redirect, send_file
-from db import getUsers, addUser, editUser, deleteUser, getUserByUserName, connect, addImageMetadata, getAllImagesByUsername, deleteImageMetadata
-from session_secrets import get_secret_flask_session
-from uploadFile import upload_file, download_file, delete_object
+from gallery.ui.db import getUsers, addUser, editUser, deleteUser, getUserByUserName, connect, addImageMetadata, getAllImagesByUsername, deleteImageMetadata
+from gallery.ui.session_secrets import get_secret_flask_session
+from gallery.ui.uploadFile import upload_file, download_file, delete_object
 from functools import wraps
 
 import json, os
