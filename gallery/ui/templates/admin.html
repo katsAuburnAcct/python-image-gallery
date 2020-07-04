@@ -13,8 +13,8 @@
         <ul>
             {% for user in users %}
             <li>
-                <a href="/admin/edit/{{user.get('username')}}">User name: {{user.get('username')}} Full Name: {{user.get('fullname')}}</a>
-                <a href="/admin/delete/{{user.get('username')}}">delete</a>
+                <a href="/admin/edit/{{user.get('username')}}">User name: {{user.get('username')}} Full Name: {{user.get('fullname')}} Is Admin: {{ user.get('isadmin') }}</a>
+                <a href="/admin/delete/{{user.get('username')}}"> -------- delete</a>
             </li>
             {% endfor %}
         </ul>

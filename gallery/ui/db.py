@@ -69,8 +69,8 @@ def isUsernameExist(username):
     countRow = res.fetchone()
     return int(countRow[0]) > 0
 
-def addUser(username, password, fullname):
-    res = execute("insert into users(username, password, full_name) values (%s,%s,%s);", (username, password, fullname))
+def addUser(username, password, fullname, isadmin):
+    res = execute("insert into users(username, password, full_name, isadmin) values (%s,%s,%s,%s);", (username, password, fullname, isadmin))
     connection.commit()
 
 def editUser(username, newPassword, newFullname):
@@ -100,8 +100,38 @@ def getUsers():
         users.append(
          {
             'username': row[0],
-            'fullname': row[2]
+            'fullname': row[2],
+            'isadmin' : row[3]
          })
     return users
 
+def getUser(username):
+    res = execute("select * from users where username=%s;", (username,))
+    user = res.fetchone()
+    return {
+        'username' : user[0],
+        'password' : user[1],
+        'fullname' : user[2],
+        'isadmin' : user[3]
+    }
 
+def getUserByUserName(username):
+    if(isUsernameExist(username)):
+        return getUser(username)
+    else:
+        return None
+
+def addImageMetadata(username, imageKey):
+    res = execute("insert into images_metadata(image_owner, image_key) values (%s,%s);", (username, imageKey))
+    connection.commit()
+
+def getAllImagesByUsername(username):
+    res = execute("select image_key from images_metadata where image_owner=%s;", (username, ))
+    imageKeys = []
+    for row in res:
+        imageKeys.append(row[0])
+    return imageKeys
+
+def deleteImageMetadata(username, imagekey):
+    res = execute("delete from images_metadata where image_owner=%s AND image_key=%s;", (username, imagekey))
+    connection.commit()
