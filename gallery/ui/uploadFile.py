@@ -1,8 +1,17 @@
 import logging
 import boto3
+import os
 from botocore.exceptions import ClientError
 
+
+S3_IMAGE_BUCKET = os.environ.get('S3_IMAGE_BUCKET')
 BUCKET = 'edu.au.cc.kats-image-gallery'
+
+if S3_IMAGE_BUCKET:
+    BUCKET = S3_IMAGE_BUCKET
+    print('S3_IMAGE_BUCKET in if statement')
+    print(S3_IMAGE_BUCKET)
+# BUCKET = 'edu.au.cc.kats-image-gallery'
 
 def upload_file(filePath):
     """

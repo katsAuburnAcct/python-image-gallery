@@ -1,5 +1,6 @@
 import psycopg2
 import json
+import os
 
 from gallery.ui.mySecrets import get_secret_image_gallery
 
@@ -14,10 +15,28 @@ connection = None
 
 # # returns a python dictionary
 def get_secret():
-    jsonString = get_secret_image_gallery()
-    # converts JSON object to a python dictionary
-    dict = json.loads(jsonString)
-    return dict
+    PG_HOST = os.environ.get('PG_HOST')
+    IG_DATABASE = os.environ.get('IG_DATABASE')
+    IG_USER = os.environ.get('IG_USER')
+    IG_PASSWD = os.environ.get('IG_PASSWD')
+    print('environment vars in get secret')
+    print(PG_HOST)
+    print(IG_DATABASE)
+    print(IG_USER)
+    print(IG_PASSWD)
+
+    if PG_HOST and IG_DATABASE and IG_USER and IG_PASSWD:
+        return {
+            'password' : IG_PASSWD,
+            'host' : PG_HOST,
+            'username': IG_USER,
+            'databaseName' : IG_DATABASE
+        }
+    else:
+        jsonString = get_secret_image_gallery()
+        # converts JSON object to a python dictionary
+        dict = json.loads(jsonString)
+        return dict
 
 
 def get_password(secret):

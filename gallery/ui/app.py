@@ -13,9 +13,17 @@ UPLOAD_FOLDER = 'uploads'
 
 app = Flask(__name__)
 
-jsonString = get_secret_flask_session()
-dict = json.loads(jsonString)
-app.secret_key = dict['secret_key']
+SESSION_SECRET_KEY = os.environ.get('SESSION_SECRET_KEY')
+print('SESSION_SECRET_KEY')
+print(SESSION_SECRET_KEY)
+if SESSION_SECRET_KEY:
+    app.secret_key = SESSION_SECRET_KEY
+    print('SESSION_SECRET_KEY if statement executed')
+else:
+    jsonString = get_secret_flask_session()
+    dict = json.loads(jsonString)
+    app.secret_key = dict['secret_key']
+
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
