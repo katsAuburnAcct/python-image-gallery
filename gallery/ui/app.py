@@ -9,7 +9,7 @@ from functools import wraps
 
 import json, os
 
-UPLOAD_FOLDER = 'uploads'
+UPLOAD_FOLDER = 'gallery/ui/uploads'
 
 app = Flask(__name__)
 
