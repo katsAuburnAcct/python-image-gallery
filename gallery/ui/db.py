@@ -13,14 +13,14 @@ from gallery.ui.mySecrets import get_secret_image_gallery
 
 connection = None
 
+PG_HOST = os.environ.get('PG_HOST')
+IG_DATABASE = os.environ.get('IG_DATABASE')
+IG_USER = os.environ.get('IG_USER')
+IG_PASSWD = os.environ.get('IG_PASSWD')
+IG_PASSWD_FILE = os.environ.get('IG_PASSWD_FILE')
+
 # # returns a python dictionary
 def get_secret():
-    PG_HOST = os.environ.get('PG_HOST')
-    IG_DATABASE = os.environ.get('IG_DATABASE')
-    IG_USER = os.environ.get('IG_USER')
-    IG_PASSWD = os.environ.get('IG_PASSWD')
-    IG_PASSWD_FILE = os.environ.get('IG_PASSWD_FILE')
-
     if PG_HOST and IG_DATABASE and IG_USER and (IG_PASSWD or IG_PASSWD_FILE):
         return {
             'password' : IG_PASSWD,
