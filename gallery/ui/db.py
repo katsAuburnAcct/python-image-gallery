@@ -19,13 +19,9 @@ def get_secret():
     IG_DATABASE = os.environ.get('IG_DATABASE')
     IG_USER = os.environ.get('IG_USER')
     IG_PASSWD = os.environ.get('IG_PASSWD')
-    print('environment vars in get secret')
-    print(PG_HOST)
-    print(IG_DATABASE)
-    print(IG_USER)
-    print(IG_PASSWD)
+    IG_PASSWD_FILE = os.environ.get('IG_PASSWD_FILE')
 
-    if PG_HOST and IG_DATABASE and IG_USER and IG_PASSWD:
+    if PG_HOST and IG_DATABASE and IG_USER and (IG_PASSWD or IG_PASSWD_FILE):
         return {
             'password' : IG_PASSWD,
             'host' : PG_HOST,
@@ -40,7 +36,10 @@ def get_secret():
 
 
 def get_password(secret):
-    return secret['password']
+    if(IG_PASSWD_FILE):
+       return get_password_from_file(IG_PASSWD_FILE)
+    else:
+        return secret['password']
 
 def get_host(secret):
     return secret['host']
@@ -51,12 +50,12 @@ def get_username(secret):
 def get_dbname(secret):
     return secret['databaseName']
 
-# def get_password():
-#     f = open(password_file, "r")
-#     result = f.readline()
-#     f.close()
-#     # remove the new line at the end of the line
-#     return result[:-1]
+def get_password_from_file():
+    f = open(password_file, "r")
+    result = f.readline()
+    f.close()
+    # remove the new line at the end of the line
+    return result[:-1]
 
 # Maintain a single connection to our db
 def connect():
