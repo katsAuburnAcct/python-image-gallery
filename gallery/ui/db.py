@@ -50,7 +50,7 @@ def get_username(secret):
 def get_dbname(secret):
     return secret['databaseName']
 
-def get_password_from_file():
+def get_password_from_file(password_file):
     f = open(password_file, "r")
     result = f.readline()
     f.close()
